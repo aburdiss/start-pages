@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>~~Breathe~~</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Montserrat", sans-serif;
+      }
+      body {
+        background-color: #282a36;
+        margin: 0px 120px;
+      }
+      #quote,
+      #author {
+        font-family: "Major Mono Display", monospace;
+        color: #6272a4;
+      }
+      #author {
+        margin-top: 10px;
+      }
+      .header {
+        padding: 30px 0px;
+        border-bottom: 10px solid #bd93f9;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        min-height: 150px;
+      }
+      #greeting {
+        color: #6272a4;
+        font-size: 2.5rem;
+        font-family: "Major Mono Display", monospace;
+        margin: 0;
+      }
+      #ct7 {
+        position: fixed;
+        top: -55px;
+        right: 97px;
+        font-size: 200px;
+        color: #44475a;
+        font-weight: bold;
+        z-index: -1;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      a {
+        color: #8be9fd;
+        border-radius: 8px;
+        border: 1px solid #8be9fd;
+        padding: 10px 40px;
+      }
+      a:hover {
+        background-color: #44475a;
+      }
+      main {
+        padding-top: 80px;
+        display: flex;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <h1 id="greeting">&nbsp;</h1>
+    </div>
+    <div class="quote-container">
+      <div id="quote">&nbsp;</div>
+      <div id="author">&nbsp;</div>
+    </div>
+    <main>
+      <a href="https://trello.com/">trello</a>
+      <a href="https://outlook.live.com/">mail</a>
+    </main>
+    <div id="ct7"></div>
+
+    <script>
+      fetch("https://api.quotable.io/random")
+        .then((resp) => resp.json())
+        .then((data) => {
+          document.querySelector("#quote").innerHTML = data.content;
+          document.querySelector("#author").innerHTML = data.author;
+        });
+
+      var myDate = new Date();
+      var hrs = myDate.getHours();
+
+      var greet;
+
+      if (hrs > 4 && hrs < 12) {
+        greet = "good morning";
+      } else if (hrs >= 12 && hrs <= 17) {
+        greet = "good afternoon";
+        let main = document.querySelector("main");
+        let chan = document.createElement("a");
+        chan.innerHTML = "papes";
+        chan.href = "https://boards.4chan.org/wg/catalog";
+        main.appendChild(chan);
+        let tube = document.createElement("a");
+        tube.innerHTML = "watch";
+        tube.href = "https://www.youtube.com/";
+        main.appendChild(tube);
+      } else if ((hrs >= 17 && hrs <= 24) || hrs < 4) {
+        greet = "good evening";
+        let main = document.querySelector("main");
+        let chan = document.createElement("a");
+        chan.innerHTML = "papes";
+        chan.href = "https://boards.4chan.org/wg/catalog";
+        main.appendChild(chan);
+        let tube = document.createElement("a");
+        tube.innerHTML = "watch";
+        tube.href = "https://www.youtube.com/";
+        main.appendChild(tube);
+      }
+
+      document.querySelector("#greeting").innerHTML = greet + ", courtney";
+
+      function display_ct7() {
+        var x = new Date();
+        var ampm = x.getHours() >= 12 ? " PM" : " AM";
+        hours = x.getHours() % 12;
+        hours = hours ? hours : 12;
+        hours = hours.toString().length == 1 ? 0 + hours.toString() : hours;
+
+        var minutes = x.getMinutes().toString();
+        minutes = minutes.length == 1 ? 0 + minutes : minutes;
+
+        var x1 = hours + ":" + minutes + ampm;
+        document.getElementById("ct7").innerHTML = x1;
+        display_c7();
+      }
+      function display_c7() {
+        var refresh = 1000; // Refresh rate in milli seconds
+        mytime = setTimeout("display_ct7()", refresh);
+      }
+      display_c7();
+      display_ct7();
+    </script>
+  </body>
+</html>

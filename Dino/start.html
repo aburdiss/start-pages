@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>B R E A T H E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    font-family: 'VT323', monospace;
+    font-size: 25px;
+  }
+  body {
+    color: #93a1a1;
+    background-color: #002b36;
+  }
+  h1 {
+    margin: 60px auto;
+    padding-bottom: 20px;
+    width: 50%;
+    text-align: center;
+    font-size: 50px;
+    border-bottom: 5px solid #2aa198;
+  }
+  main {
+    width: 50%;
+    margin: auto;
+  }
+  form {
+    margin: 10px 0;
+  }
+  button {
+    background-color: #eee8d5;
+  }
+  button:hover, button:focus {
+    background-color: #fdf6e3;
+  }
+  .orange {
+     color: #cb4b16;
+  }
+  #author {
+    margin-bottom: 40px;
+  }
+  a, a:visited {
+    color: #268bd2;
+    display: block;
+    margin: 20px 0 0 0;
+  }
+  a:hover, a:focus {
+    color: #6c71c4;
+  }
+  iframe {
+    margin: 100px auto 0 auto;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+  <h1 id="hello"></h1>
+  <main>
+    <div id="quote"></div>
+    <div id="author"></div>
+    <div>What can I find for you today?</div>
+    <form>
+      <input type="search" id="s" />
+      <button type="submit">Query</button>
+    </form>
+    <a href="https://www.youtube.com/c/RowenaTsai">youtube</a>
+    <a href="https://www.youtube.com/watch?v=5qap5aO4i9A">music</a>
+    <a href="https://boards.4chan.org/wg/catalog">wallpapers</a>
+    <iframe id="serviceFrameSend" src="dino.html" width="600" height="300"  frameborder="0"></iframe>
+  </main>
+<script>
+  // Set H1 text
+  let greeting = "";
+  const hour = new Date().getHours();
+  if (hour < 12) {
+    greeting = "Good Morning, Courtney.";
+  } else if (hour < 18) {
+    greeting = "Good Afternoon, Courtney.";
+  } else {
+    greeting = "Good Evening, Courtney.";
+  }
+  document.querySelector('#hello').innerText = greeting;
+
+  // Handle Quote
+  fetch("https://api.quotable.io/random")
+    .then(resp => resp.json())
+    .then(data => {
+      let content = data.content.toLowerCase();
+      let highlightedWords = [
+        "greatness",
+        "great",
+        "hope",
+        "wisdom",
+        "harmony",
+        "meditation",
+        "dreams",
+        "dream",
+        "love",
+        "successful",
+        "success",
+        "englightened",
+        "knowledge",
+        "beautiful",
+        "beauty"
+      ];
+      highlightedWords.forEach(word => {
+        content = content.replaceAll(word, `<span class="orange">${word}</span>`);
+      });
+      document.querySelector('#quote').innerHTML = content;
+      document.querySelector('#author').innerText = '- ' + data.author.toLowerCase();
+    });
+
+  // Handle Search Bar
+  document.querySelector('form').addEventListener('submit', (e) => {
+    const searchTerm = document.querySelector('#s').value;
+    e.preventDefault();
+    console.log(searchTerm);
+    window.location.href = 'https://duckduckgo.com/?q=' + searchTerm;
+  });
+</script>
+</body>
+</html>
